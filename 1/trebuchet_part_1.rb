@@ -1,59 +1,60 @@
+# frozen_string_literal: true
+
 class Trebuchet
-    @@digits = (0..9).map{|digit| digit.to_s}
+  @@digits = (0..9).map(&:to_s)
 
-    # Returns first digit in a string, default is 0
-    #
-    # @param line[String, #read] the string being searched
-    # @return [String] the first digit in a given string
-    def get_first_digit(line)
-        line.split("").each do |c|
-            return c if @@digits.include? c
-        end
-        # Document does not specify what to do when no digits are included in the string
-        # so I am setting a reasonable default of 0. 
-        return "0" 
+  # Returns first digit in a string, default is 0
+  #
+  # @param line[String, #read] the string being searched
+  # @return [String] the first digit in a given string
+  def get_first_digit(line)
+    line.split('').each do |c|
+      return c if @@digits.include? c
+    end
+    # Document does not specify what to do when no digits are included in the string
+    # so I am setting a reasonable default of 0.
+    '0'
+  end
+
+  # Returns last digit in string, default is 0
+  #
+  # @param line[String, #read] the string being searched
+  # @return [String] the last digit in a given string
+  def get_last_digit(line)
+    (1..line.size).each do |i|
+      return line[line.size - i] if @@digits.include?(line[line.size - i])
+    end
+    '0'
+  end
+
+  # for each line in input, create a 2-digit integer based on the first and last digit
+  # in the line, then return the sum of each of those integers
+  #
+  # @param input[String, #read] a multi-line string
+  # @return [Integer] sum of each line's calculated calibration
+  def calibrate(input)
+    lines = input.split("\n")
+
+    calibrations = []
+    lines.each do |line|
+      puts line
+      first_digit = get_first_digit(line)
+      last_digit = get_last_digit(line)
+      puts "first_digit: #{first_digit}, last_digit: #{last_digit}"
+      calibrations << (first_digit + last_digit).to_i
     end
 
-    # Returns last digit in string, default is 0
-    #
-    # @param line[String, #read] the string being searched
-    # @return [String] the last digit in a given string
-    def get_last_digit(line)
-        for i in 1..line.size 
-            return line[line.size - i] if @@digits.include?(line[line.size - i])
-        end
-        return "0"
-    end
-
-    # for each line in input, create a 2-digit integer based on the first and last digit 
-    # in the line, then return the sum of each of those integers
-    #
-    # @param input[String, #read] a multi-line string
-    # @return [Integer] sum of each line's calculated calibration 
-    def calibrate(input)
-        lines = input.split("\n")
-
-        calibrations = []
-        lines.each do |line|
-            puts line
-            first_digit = get_first_digit(line)
-            last_digit = get_last_digit(line)
-            puts "first_digit: #{first_digit}, last_digit: #{last_digit}"
-            calibrations << (first_digit + last_digit).to_i
-        end
-
-        sum = calibrations.reduce(:+)
-        puts sum
-        # I feel like this should be returned even though I don't plan on doing anything with it here
-        sum
-    end
+    sum = calibrations.reduce(:+)
+    puts sum
+    # I feel like this should be returned even though I don't plan on doing anything with it here
+    sum
+  end
 end
 
 # sample_input = """1abc2
 # pqr3stu8vwx
 # a1b2c3d4e5f
 # treb7uchet"""
-
 
 # trebuchet = Trebuchet.new
 # trebuchet.calibrate(sample_input)
@@ -1058,6 +1059,5 @@ end
 # two4dddpmrhh7fourthreeeight9
 # slhdsxngfxszspppxxfftmxlptzhtwovp1
 # 4vmzcrhtdvnm6zfive5pkbhcxj"""
-
 
 # trebuchet.calibrate(test_input)

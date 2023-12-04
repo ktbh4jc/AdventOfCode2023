@@ -1,123 +1,125 @@
+# frozen_string_literal: true
+
 class Trebuchet
-    @@forward_map = { 
-        "1" => Proc.new{1},  
-        "2" => Proc.new{2},  
-        "3" => Proc.new{3},  
-        "4" => Proc.new{4},  
-        "5" => Proc.new{5},  
-        "6" => Proc.new{6},  
-        "7" => Proc.new{7},  
-        "8" => Proc.new{8},  
-        "9" => Proc.new{9},  
-        "0" => Proc.new{0},  
-        "o" => Proc.new{|line, i| 1 if line.size >= i + 2 && line[i, 3] == "one"},
-        "t" => Proc.new{|line, i| 
-            if line.size >= i + 2 && line[i, 3] == "two"
-                2
-            elsif line.size >= i + 4 && line[i, 5] == "three"
-                3
-            end},
-        "f" => Proc.new{|line, i| 
-            if line.size >= i + 3 && line[i, 4] == "four"
-                4
-            elsif line.size >= i + 3 && line[i, 4] == "five"
-                5
-            end},
-        "s" => Proc.new{|line, i| 
-            if line.size >= i + 2 && line[i, 3] == "six"
-                6
-            elsif line.size >= i + 4 && line[i, 5] == "seven"
-                7
-            end},
-        "e" => Proc.new{|line, i| 8 if line.size >= i + 4 && line[i, 5] == "eight"},
-        "n" => Proc.new{|line, i| 9 if line.size >= i + 3 && line[i, 4] == "nine"},
-    }
+  @@forward_map = {
+    '1' => proc { 1 },
+    '2' => proc { 2 },
+    '3' => proc { 3 },
+    '4' => proc { 4 },
+    '5' => proc { 5 },
+    '6' => proc { 6 },
+    '7' => proc { 7 },
+    '8' => proc { 8 },
+    '9' => proc { 9 },
+    '0' => proc { 0 },
+    'o' => proc { |line, i| 1 if line.size >= i + 2 && line[i, 3] == 'one' },
+    't' => proc { |line, i|
+             if line.size >= i + 2 && line[i, 3] == 'two'
+               2
+             elsif line.size >= i + 4 && line[i, 5] == 'three'
+               3
+             end
+           },
+    'f' => proc { |line, i|
+             if line.size >= i + 3 && line[i, 4] == 'four'
+               4
+             elsif line.size >= i + 3 && line[i, 4] == 'five'
+               5
+             end
+           },
+    's' => proc { |line, i|
+             if line.size >= i + 2 && line[i, 3] == 'six'
+               6
+             elsif line.size >= i + 4 && line[i, 5] == 'seven'
+               7
+             end
+           },
+    'e' => proc { |line, i| 8 if line.size >= i + 4 && line[i, 5] == 'eight' },
+    'n' => proc { |line, i| 9 if line.size >= i + 3 && line[i, 4] == 'nine' }
+  }
 
-    @@back_map = { 
-        "1" => Proc.new{1},  
-        "2" => Proc.new{2},  
-        "3" => Proc.new{3},  
-        "4" => Proc.new{4},  
-        "5" => Proc.new{5},  
-        "6" => Proc.new{6},  
-        "7" => Proc.new{7},  
-        "8" => Proc.new{8},  
-        "9" => Proc.new{9},  
-        "0" => Proc.new{0},  
-        "e" => Proc.new{|line, i| 
-            if i >= 2 && line[i-2, 3] == "one"
-                1
-            elsif i >= 4 && line[i-4, 5] == "three"
-                3
-            elsif i >= 3 && line[i-3, 4] == "five"
-                5
-            elsif i >= 3 && line[i-3, 4] == "nine"
-                9
-            end},
-        "o" => Proc.new{|line, i| 2 if i >= 2 && line[i-2, 3] == "two"},
-        "r" => Proc.new{|line, i| 4 if i >= 3 && line[i-3, 4] == "four"},
-        "x" => Proc.new{|line, i| 6 if i >= 2 && line[i-2, 3] == "six"},
-        "n" => Proc.new{|line, i| 7 if i >= 4 && line[i-4, 5] == "seven"},
-        "t" => Proc.new{|line, i| 8 if i >= 4 && line[i-4, 5] == "eight"}
-    }
+  @@back_map = {
+    '1' => proc { 1 },
+    '2' => proc { 2 },
+    '3' => proc { 3 },
+    '4' => proc { 4 },
+    '5' => proc { 5 },
+    '6' => proc { 6 },
+    '7' => proc { 7 },
+    '8' => proc { 8 },
+    '9' => proc { 9 },
+    '0' => proc { 0 },
+    'e' => proc { |line, i|
+             if i >= 2 && line[i - 2, 3] == 'one'
+               1
+             elsif i >= 4 && line[i - 4, 5] == 'three'
+               3
+             elsif i >= 3 && line[i - 3, 4] == 'five'
+               5
+             elsif i >= 3 && line[i - 3, 4] == 'nine'
+               9
+             end
+           },
+    'o' => proc { |line, i| 2 if i >= 2 && line[i - 2, 3] == 'two' },
+    'r' => proc { |line, i| 4 if i >= 3 && line[i - 3, 4] == 'four' },
+    'x' => proc { |line, i| 6 if i >= 2 && line[i - 2, 3] == 'six' },
+    'n' => proc { |line, i| 7 if i >= 4 && line[i - 4, 5] == 'seven' },
+    't' => proc { |line, i| 8 if i >= 4 && line[i - 4, 5] == 'eight' }
+  }
 
-    # Returns first digit in a string, default is 0
-    #
-    # @param line[String, #read] the string being searched
-    # @return [Integer] the first digit in a given string as an int
-    def get_first_digit(line)
-        for i in 0..line.size-1
-            if @@forward_map.keys.include?(line[i])
-                new_digit = @@forward_map[line[i]].call(line, i)
-                unless new_digit.nil?
-                    return new_digit
-                end
-            end
-        end
-        # Document does not specify what to do when no digits are included in the string
-        # so I am setting a reasonable default of 0. 
-        return 0 
+  # Returns first digit in a string, default is 0
+  #
+  # @param line[String, #read] the string being searched
+  # @return [Integer] the first digit in a given string as an int
+  def get_first_digit(line)
+    (0..line.size - 1).each do |i|
+      if @@forward_map.keys.include?(line[i])
+        new_digit = @@forward_map[line[i]].call(line, i)
+        return new_digit unless new_digit.nil?
+      end
+    end
+    # Document does not specify what to do when no digits are included in the string
+    # so I am setting a reasonable default of 0.
+    0
+  end
+
+  # Returns last digit in string, default is 0
+  #
+  # @param line[String, #read] the string being searched
+  # @return [Integer] the last digit in a given string
+  def get_last_digit(line)
+    (1..line.size).each do |i|
+      if @@back_map.keys.include?(line[line.size - i])
+        new_digit = @@back_map[line[line.size - i]].call(line, line.size - i)
+        return new_digit unless new_digit.nil?
+      end
+    end
+    0
+  end
+
+  # for each line in input, create a 2-digit integer based on the first and last digit
+  # in the line, then return the sum of each of those integers
+  #
+  # @param input[String, #read] a multi-line string
+  # @return [Integer] sum of each line's calculated calibration
+  def calibrate(input)
+    lines = input.split("\n")
+
+    calibrations = []
+    lines.each do |line|
+      first_digit = get_first_digit(line)
+      last_digit = get_last_digit(line)
+      calibrations << first_digit * 10 + last_digit
     end
 
-    # Returns last digit in string, default is 0
-    #
-    # @param line[String, #read] the string being searched
-    # @return [Integer] the last digit in a given string
-    def get_last_digit(line)
-        for i in 1..line.size 
-            if @@back_map.keys.include?(line[line.size-i])
-                new_digit = @@back_map[line[line.size-i]].call(line, line.size-i)
-                unless new_digit.nil?
-                    return new_digit
-                end
-            end
-        end
-        return 0
-    end
-
-    # for each line in input, create a 2-digit integer based on the first and last digit 
-    # in the line, then return the sum of each of those integers
-    #
-    # @param input[String, #read] a multi-line string
-    # @return [Integer] sum of each line's calculated calibration 
-    def calibrate(input)
-        lines = input.split("\n")
-
-        calibrations = []
-        lines.each do |line|
-            first_digit = get_first_digit(line)
-            last_digit = get_last_digit(line)
-            calibrations << first_digit*10+last_digit
-        end
-
-        sum = calibrations.reduce(:+)
-        puts sum
-        # I feel like this should be returned even though I don't plan on doing anything with it here
-        sum
-    end
+    sum = calibrations.reduce(:+)
+    puts sum
+    # I feel like this should be returned even though I don't plan on doing anything with it here
+    sum
+  end
 end
 
-#Commenting out this bit so that VS Code stops suggesting input lines as autocomplete in other areas. 
+# Commenting out this bit so that VS Code stops suggesting input lines as autocomplete in other areas.
 
 # trebuchet = Trebuchet.new
 
@@ -130,7 +132,6 @@ end
 # 7pqrstsixteen"""
 
 # trebuchet.calibrate(sample_input)
-
 
 # test_input = """9vxfg
 # 19qdlpmdrxone7sevennine

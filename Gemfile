@@ -1,5 +1,8 @@
+# frozen_string_literal: true
+
 source 'https://rubygems.org'
 
-gem 'rubocop', require: false
-gem 'yard'
 gem 'rspec'
+gem 'rubocop', require: false
+gem 'rubocop-rspec'
+gem 'yard'

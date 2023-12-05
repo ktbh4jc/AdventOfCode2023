@@ -1,15 +1,17 @@
 # frozen_string_literal: true
 
+# A class that solves part 1 of https://adventofcode.com/2023/day/2
 class Cube
-  @@max_red = 12
-  @@max_green = 13
-  @@max_blue = 14
+  MAX_RED = 12
+  MAX_GREEN = 13
+  MAX_BLUE = 14
 
   Pull = Struct.new(:red, :green, :blue)
   Game = Struct.new(:id, :pulls) do |_game|
-    def is_valid
+    # Determins if a game is valid
+    def valid?
       pulls.each do |pull|
-        return false if pull.red > @@max_red || pull.green > @@max_green || pull.blue > @@max_blue
+        return false if pull.red > MAX_RED || pull.green > MAX_GREEN || pull.blue > MAX_BLUE
       end
       true
     end

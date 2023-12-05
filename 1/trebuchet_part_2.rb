@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
+# A class that solves part 2 of https://adventofcode.com/2023/day/1
 class Trebuchet
-  @@forward_map = {
+  FORWARD_MAP = {
     '1' => proc { 1 },
     '2' => proc { 2 },
     '3' => proc { 3 },
@@ -36,9 +37,9 @@ class Trebuchet
            },
     'e' => proc { |line, i| 8 if line.size >= i + 4 && line[i, 5] == 'eight' },
     'n' => proc { |line, i| 9 if line.size >= i + 3 && line[i, 4] == 'nine' }
-  }
+  }.freeze
 
-  @@back_map = {
+  BACKWARDS_MAP = {
     '1' => proc { 1 },
     '2' => proc { 2 },
     '3' => proc { 3 },
@@ -65,7 +66,7 @@ class Trebuchet
     'x' => proc { |line, i| 6 if i >= 2 && line[i - 2, 3] == 'six' },
     'n' => proc { |line, i| 7 if i >= 4 && line[i - 4, 5] == 'seven' },
     't' => proc { |line, i| 8 if i >= 4 && line[i - 4, 5] == 'eight' }
-  }
+  }.freeze
 
   # Returns first digit in a string, default is 0
   #
@@ -73,8 +74,8 @@ class Trebuchet
   # @return [Integer] the first digit in a given string as an int
   def get_first_digit(line)
     (0..line.size - 1).each do |i|
-      if @@forward_map.keys.include?(line[i])
-        new_digit = @@forward_map[line[i]].call(line, i)
+      if FORWARD_MAP.keys.include?(line[i])
+        new_digit = FORWARD_MAP[line[i]].call(line, i)
         return new_digit unless new_digit.nil?
       end
     end
@@ -89,8 +90,8 @@ class Trebuchet
   # @return [Integer] the last digit in a given string
   def get_last_digit(line)
     (1..line.size).each do |i|
-      if @@back_map.keys.include?(line[line.size - i])
-        new_digit = @@back_map[line[line.size - i]].call(line, line.size - i)
+      if BACKWARDS_MAP.keys.include?(line[line.size - i])
+        new_digit = BACKWARDS_MAP[line[line.size - i]].call(line, line.size - i)
         return new_digit unless new_digit.nil?
       end
     end
@@ -121,19 +122,19 @@ end
 
 # Commenting out this bit so that VS Code stops suggesting input lines as autocomplete in other areas.
 
-# trebuchet = Trebuchet.new
+trebuchet = Trebuchet.new
 
-# sample_input = """two1nine
-# eightwothree
-# abcone2threexyz
-# xtwone3four
-# 4nineeightseven2
-# zoneight234
-# 7pqrstsixteen"""
+sample_input = "two1nine
+eightwothree
+abcone2threexyz
+xtwone3four
+4nineeightseven2
+zoneight234
+7pqrstsixteen"
 
-# trebuchet.calibrate(sample_input)
+trebuchet.calibrate(sample_input)
 
-# test_input = """9vxfg
+# test_input = "9vxfg
 # 19qdlpmdrxone7sevennine
 # 1dzntwofour9nineffck
 # 7bx8hpldgzqjheight
@@ -1132,6 +1133,6 @@ end
 # rdkfxsix4tnmndhnxnv86
 # two4dddpmrhh7fourthreeeight9
 # slhdsxngfxszspppxxfftmxlptzhtwovp1
-# 4vmzcrhtdvnm6zfive5pkbhcxj"""
+# 4vmzcrhtdvnm6zfive5pkbhcxj"
 
 # trebuchet.calibrate(test_input)

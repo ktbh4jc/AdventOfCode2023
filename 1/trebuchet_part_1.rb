@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
+# A class that solves part 1 of https://adventofcode.com/2023/day/1
 class Trebuchet
-  @@digits = (0..9).map(&:to_s)
+  DIGITS = (0..9).map(&:to_s)
 
   # Returns first digit in a string, default is 0
   #
@@ -9,7 +10,7 @@ class Trebuchet
   # @return [String] the first digit in a given string
   def get_first_digit(line)
     line.split('').each do |c|
-      return c if @@digits.include? c
+      return c if DIGITS.include? c
     end
     # Document does not specify what to do when no digits are included in the string
     # so I am setting a reasonable default of 0.
@@ -22,7 +23,7 @@ class Trebuchet
   # @return [String] the last digit in a given string
   def get_last_digit(line)
     (1..line.size).each do |i|
-      return line[line.size - i] if @@digits.include?(line[line.size - i])
+      return line[line.size - i] if DIGITS.include?(line[line.size - i])
     end
     '0'
   end
@@ -37,10 +38,8 @@ class Trebuchet
 
     calibrations = []
     lines.each do |line|
-      puts line
       first_digit = get_first_digit(line)
       last_digit = get_last_digit(line)
-      puts "first_digit: #{first_digit}, last_digit: #{last_digit}"
       calibrations << (first_digit + last_digit).to_i
     end
 
@@ -51,10 +50,10 @@ class Trebuchet
   end
 end
 
-# sample_input = """1abc2
+# sample_input = "1abc2
 # pqr3stu8vwx
 # a1b2c3d4e5f
-# treb7uchet"""
+# treb7uchet"
 
 # trebuchet = Trebuchet.new
 # trebuchet.calibrate(sample_input)

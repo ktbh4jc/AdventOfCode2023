@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # A class that solves part 1 of https://adventofcode.com/2023/day/1
-class Trebuchet
+class Trebuchet1
   DIGITS = (0..9).map(&:to_s)
 
   # Returns first digit in a string, default is 0
@@ -55,7 +55,7 @@ end
 # a1b2c3d4e5f
 # treb7uchet"
 
-# trebuchet = Trebuchet.new
+# trebuchet = Trebuchet1.new
 # trebuchet.calibrate(sample_input)
 
 # test_input = """9vxfg

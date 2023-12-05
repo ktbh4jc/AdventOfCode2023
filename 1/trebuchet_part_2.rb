@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # A class that solves part 2 of https://adventofcode.com/2023/day/1
-class Trebuchet
+class Trebuchet2
   FORWARD_MAP = {
     '1' => proc { 1 },
     '2' => proc { 2 },
@@ -122,7 +122,7 @@ end
 
 # Commenting out this bit so that VS Code stops suggesting input lines as autocomplete in other areas.
 
-trebuchet = Trebuchet.new
+trebuchet = Trebuchet2.new
 
 sample_input = "two1nine
 eightwothree

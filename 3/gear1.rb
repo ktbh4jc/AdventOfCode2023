@@ -35,8 +35,26 @@ class Gear1
   # @param engine [Array[String], #read] a representation of the provided engine
   # @param row [Integer, #read] the row a given number exists on
   # @param column [Integer, #read] the column a given number starts on
-  # @return [Integer] the full number starting at enging[row][collumn]
-  def find_full_number(engine, row, column) end
+  # @return [Integer] the full number starting at enging[row][column]
+  def find_full_number(engine, row, column)
+    # puts engine[row][column]
+    column_under_test = column + 1
+    num = engine[row][column].to_i
+    while column_under_test < engine[row].size && numeric?(engine[row][column_under_test])
+      num *= 10
+      num += engine[row][column_under_test].to_i
+      column_under_test += 1
+    end
+    num
+  end
+
+  # determins if a given character is a digit
+  #
+  # @param character [String, #read] should be a single character.
+  # returns [Boolean], true if given a single character
+  def numeric?(character)
+    character.match?(/^[[:digit:]]$/)
+  end
 end
 
 # Overwrite Integer to include a num_digits function (found on stackoverflow)
